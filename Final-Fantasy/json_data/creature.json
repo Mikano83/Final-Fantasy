@@ -1,0 +1,44 @@
+{
+  "Creature": [
+    {
+      "": {
+        
+        "name": "Taotie",
+        "type": "Beast",
+        "expyield": [25,40],
+
+        "level": [2,6],
+        "movepool": ["Attack", "Ice I"],
+        
+        "HP": 50,
+        "MP": 30,
+        "ATK": 30,
+        "DEF": 15,
+        "MATK": 15,
+        "MDEF": 25,
+        "SPD": 30,
+        "LUCK": 20
+      }
+    },
+    {
+      "": {
+
+        "name": "Garru",
+        "type": "Beast",
+        "expyield": [200,270],
+
+        "level": [9,12],
+        "movepool": ["Attack", "Ice I"],
+    
+        "HP": 500,
+        "MP": 50,
+        "ATK": 60,
+        "DEF": 80,
+        "MATK": 25,
+        "MDEF": 60,
+        "SPD": 40,
+        "LUCK": 20
+      }
+    }
+  ]
+}

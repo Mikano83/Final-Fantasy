@@ -1,0 +1,28 @@
+{
+  "Skill": [
+    {
+      "": {
+        
+        "name": "Attack",
+        "type": "Normal",
+        "category": "Physical",
+        "power": 10,
+        "contact": "true",
+        "mpcost": 0
+
+      }
+    },
+    {
+      "": {
+
+        "name": "Ice I",
+        "type": "Ice",
+        "category": "Magical",
+        "power": 30,
+        "contact": "true",
+        "mpcost": 45
+
+      }
+    }
+  ]
+}
