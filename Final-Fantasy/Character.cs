@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Final_Fantasy
 {
-    internal class Character
+    internal class Character : Entity
     {
     }
 }

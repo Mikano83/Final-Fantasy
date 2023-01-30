@@ -14,7 +14,7 @@ namespace Final_Fantasy
                 sb.AppendLine(type.ToString());
             }
             var result = sb.ToString();
-            System.IO.File.WriteAllText(@"C:\temp\output.txt", result);
+            //System.IO.File.WriteAllText(@"C:\temp\output.txt", result);
 
 
             Creature Taotie1 = new Creature("Taotie");

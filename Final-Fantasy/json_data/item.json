@@ -1,0 +1,15 @@
+{
+  "Item": [
+    {
+      "": {
+
+        "id": 0,
+        "name": "Heal Potion",
+        "description": "Heals for 50 hp",
+        "effect": "Heal",
+        "price": 100,
+        "value": 25
+      }
+    }
+  ]
+}

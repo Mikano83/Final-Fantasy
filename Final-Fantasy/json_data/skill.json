@@ -2,10 +2,24 @@
   "Skill": [
     {
       "": {
+
+        "name": "None",
+        "type": "None",
+        "category": "None",
+        "element": "None",
+        "power": 0,
+        "contact": "false",
+        "mpcost": 0
+
+      }
+    },
+    {
+      "": {
         
         "name": "Attack",
-        "type": "Normal",
+        "type": "Auto",
         "category": "Physical",
+        "element": "Normal",
         "power": 10,
         "contact": "true",
         "mpcost": 0
@@ -16,8 +30,9 @@
       "": {
 
         "name": "Ice I",
-        "type": "Ice",
+        "type": "Skill",
         "category": "Magical",
+        "element":  "Ice",
         "power": 30,
         "contact": "true",
         "mpcost": 45

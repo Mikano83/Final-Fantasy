@@ -1,0 +1,32 @@
+{
+  "Quest": [
+    {
+      "": {
+
+        "id": 0,
+        "name": "Start of a new journey",
+        "type": "Discovery",
+        "status": "Accepted",
+        "description": "Welcome to the land of Zostedal! Through out this quest, you will learn how to travel, interract with the environment and much more!",
+        "step": [ "Let's start by moving around : Use ZQSD to do so", "Good! Now, let's interact with this bush by pressing E'" ],
+        "gil": 0,
+        "xp": 100,
+        "item": null
+      }
+    },
+    {
+      "": {
+
+        "id": 1,
+        "name": "First fight",
+        "type": "Combat",
+        "status": "Not discovered",
+        "description": "Welcome to the land of Zostedal! Through out this quest, you will learn how to travel, interract with the environment and much more!",
+        "step": [ "Let's start by moving around : Use ZQSD to do so", "Good! Now, let's interact with this bush by pressing E'" ],
+        "gil": 0,
+        "xp": 100,
+        "item": "Heal Potion"
+      }
+    }
+  ]
+}

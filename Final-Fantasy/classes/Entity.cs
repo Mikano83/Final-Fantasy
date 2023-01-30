@@ -58,151 +58,99 @@ namespace Final_Fantasy
 
             if (StageType == "Base")
             {
-
-                if (StageMod == -6)
+                switch(StageMod)
                 {
-                    processedStageMod = 2 / 8;
-                }
-
-                else if (StageMod == -5)
-                {
-                    processedStageMod = 2 / 7;
-                }
-
-                else if (StageMod == -4)
-                {
-                    processedStageMod = 2 / 6;
-                }
-
-                else if (StageMod == -3)
-                {
-                    processedStageMod = 2 / 5;
-                }
-
-                else if (StageMod == -2)
-                {
-                    processedStageMod = 2 / 4;
-                }
-
-                else if (StageMod == -1)
-                {
-                    processedStageMod = 2 / 3;
-                }
-
-                else if (StageMod == 0)
-                {
-                    processedStageMod = 1;
-                }
-
-                else if (StageMod == 1)
-                {
-                    processedStageMod = 3 / 2;
-                }
-
-                else if (StageMod == 2)
-                {
-                    processedStageMod = 4 / 2;
-                }
-
-                else if (StageMod == 3)
-                {
-                    processedStageMod = 5 / 2;
-                }
-
-                else if (StageMod == 4)
-                {
-                    processedStageMod = 6 / 2;
-                }
-
-                else if (StageMod == 5)
-                {
-                    processedStageMod = 7 / 2;
-                }
-
-                else if (StageMod == 6)
-                {
-                    processedStageMod = 8 / 2;
-                }
-
-                else
-                {
-                    Console.WriteLine("Stage Multiplier Processing failed : invalid value " + StageMod);
-                    return processedStageMod;
+                    case -6:
+                        processedStageMod = 2 / 8;
+                        break;
+                    case -5:
+                        processedStageMod = 2 / 7;
+                        break;
+                    case -4:
+                        processedStageMod = 2 / 6;
+                        break;
+                    case -3:
+                        processedStageMod = 2 / 5;
+                        break;
+                    case -2:
+                        processedStageMod = 2 / 4;
+                        break;
+                    case -1:
+                        processedStageMod = 2 / 3;
+                        break;
+                    case 0:
+                        processedStageMod = 1;
+                        break;
+                    case 1:
+                        processedStageMod = 3 / 2;
+                        break;
+                    case 2:
+                        processedStageMod = 4 / 2;
+                        break;
+                    case 3:
+                        processedStageMod = 5 / 2;
+                        break;
+                    case 4:
+                        processedStageMod = 6 / 2;
+                        break;
+                    case 5:
+                        processedStageMod = 7 / 2;
+                        break;
+                    case 6:
+                        processedStageMod = 8 / 2;
+                        break;
+                    default:
+                        Console.WriteLine("Stage Multiplier Processing failed : invalid value " + StageMod);
+                        return processedStageMod;
                 }
             }
 
             else if (StageType == "Combat")
             {
-
-                if (StageMod == -6)
+                switch(StageMod)
                 {
-                    processedStageMod = 3 / 9;
-                }
-
-                else if (StageMod == -5)
-                {
-                    processedStageMod = 3 / 8;
-                }
-
-                else if (StageMod == -4)
-                {
-                    processedStageMod = 3 / 7;
-                }
-
-                else if (StageMod == -3)
-                {
-                    processedStageMod = 3 / 6;
-                }
-
-                else if (StageMod == -2)
-                {
-                    processedStageMod = 3 / 5;
-                }
-
-                else if (StageMod == -1)
-                {
-                    processedStageMod = 3 / 4;
-                }
-
-                else if (StageMod == 0)
-                {
-                    processedStageMod = 1;
-                }
-
-                else if (StageMod == 1)
-                {
-                    processedStageMod = 4 / 3;
-                }
-
-                else if (StageMod == 2)
-                {
-                    processedStageMod = 5 / 3;
-                }
-
-                else if (StageMod == 3)
-                {
-                    processedStageMod = 6 / 3;
-                }
-
-                else if (StageMod == 4)
-                {
-                    processedStageMod = 7 / 3;
-                }
-
-                else if (StageMod == 5)
-                {
-                    processedStageMod = 8 / 3;
-                }
-
-                else if (StageMod == 6)
-                {
-                   processedStageMod = 9 / 3;
-                }
-
-                else
-                {
-                    Console.WriteLine("Stage Multiplier Processing failed : invalid value " + StageMod);
-                    return processedStageMod;
+                    case -6:
+                        processedStageMod = 3 / 9;
+                        break;
+                    case -5:
+                        processedStageMod = 3 / 8;
+                        break;
+                    case -4:
+                        processedStageMod = 3 / 7;
+                        break;
+                    case -3:
+                        processedStageMod = 3 / 6;
+                        break;
+                    case -2:
+                        processedStageMod = 3 / 5;
+                        break;
+                    case -1:
+                        processedStageMod = 3 / 4;
+                        break;
+                    case 0:
+                        processedStageMod = 1;
+                        break;
+                    case 1:
+                        processedStageMod = 4 / 3;
+                        break;
+                    case 2:
+                        processedStageMod = 5 / 3;
+                        break;
+                    case 3:
+                        processedStageMod = 6 / 3;
+                        break;
+                    case 4:
+                        processedStageMod = 7 / 3;
+                        break;
+                    case 5:
+                        processedStageMod = 8 / 3;
+                        break;
+                    case 6:
+                        processedStageMod = 9 / 3;
+                        break;
+                    default:
+                        Console.WriteLine("Stage Multiplier Processing failed : invalid value " + StageMod);
+                        return processedStageMod;
                 }
             }
 

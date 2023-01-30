@@ -32,6 +32,7 @@ namespace Final_Fantasy
                     _name = (string)data["Skill"][i][""]["name"];
                     _type = (string)data["Skill"][i][""]["type"];
                     _category = (string)data["Skill"][i][""]["category"];
+                    _element = (string)data["Skill"][i][""]["element"];
                     _power = (int)data["Skill"][i][""]["power"];
                     _contact = (bool)data["Skill"][i][""]["contact"];
                     _mpcost = (int)data["Skill"][i][""]["mpcost"];
@@ -42,6 +43,7 @@ namespace Final_Fantasy
         private string _name;
         private string _type;
         private string _category;
+        private string _element;
         private int _power;    
         private bool _contact;
         private int _mpcost;
@@ -49,6 +51,7 @@ namespace Final_Fantasy
         public string Name { get { return _name; } }
         public string Type { get { return _type; } }
         public string Category { get { return _category; } }
+        public string Element { get { return _element; } }
         public int Power { get { return _power; } }
         public bool Contact { get { return _contact; } }
         public int MPCost { get { return _mpcost; } }
