@@ -15,7 +15,7 @@
     },
     {
       "": {
-        
+
         "name": "Attack",
         "type": "Auto",
         "category": "Physical",
@@ -32,10 +32,36 @@
         "name": "Ice I",
         "type": "Skill",
         "category": "Magical",
-        "element":  "Ice",
+        "element": "Ice",
         "power": 30,
         "contact": "true",
         "mpcost": 45
+
+      }
+    },
+    {
+      "": {
+
+        "name": "Fire I",
+        "type": "Skill",
+        "category": "Magical",
+        "element": "Fire",
+        "power": 20,
+        "contact": "true",
+        "mpcost": 25
+
+      }
+    },
+    {
+      "": {
+
+        "name": "Cure I",
+        "type": "Skill",
+        "category": "Magical",
+        "element": "Holy",
+        "power": 20,
+        "contact": "false",
+        "mpcost": 25
 
       }
     }

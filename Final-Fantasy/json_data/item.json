@@ -4,9 +4,22 @@
       "": {
 
         "id": 0,
-        "name": "Heal Potion",
+        "name": "Potion",
+        "category": "Recovery",
         "description": "Heals for 50 hp",
-        "effect": "Heal",
+        "effect": "Cure I",
+        "price": 50,
+        "value": 10
+      }
+    },
+    {
+      "": {
+
+        "id": 1,
+        "name": "Bomb Fragment",
+        "category": "Offensive",
+        "description": "Deals 20 fire damage to an enemy",
+        "effect": "Fire I",
         "price": 100,
         "value": 25
       }
