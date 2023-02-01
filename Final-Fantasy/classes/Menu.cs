@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Final_Fantasy
 {
-    internal class Enemy
+    internal class Menu
     {
     }
 }

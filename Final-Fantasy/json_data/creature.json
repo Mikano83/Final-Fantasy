@@ -1,0 +1,64 @@
+{
+  "Creature": [
+    {
+      "": {
+
+        "name": "Taotie",
+        "type": "Beast",
+        "expyield": [ 25, 40 ],
+
+        "level": [ 2, 6 ],
+        "movepool": [ "Attack", "Ice I" ],
+
+        "HP": 50,
+        "MP": 30,
+        "ATK": 30,
+        "DEF": 15,
+        "MATK": 15,
+        "MDEF": 25,
+        "SPD": 30,
+        "LUCK": 20
+      }
+    },
+    {
+      "": {
+
+        "name": "Garru",
+        "type": "Beast",
+        "expyield": [ 200, 270 ],
+
+        "level": [ 9, 12 ],
+        "movepool": [ "Attack", "Ice I" ],
+
+        "HP": 500,
+        "MP": 50,
+        "ATK": 60,
+        "DEF": 80,
+        "MATK": 25,
+        "MDEF": 60,
+        "SPD": 40,
+        "LUCK": 20
+      }
+    },
+    {
+      "": {
+
+        "name": "Goblin",
+        "type": "Humanoid",
+        "expyield": [ 10, 20 ],
+
+        "level": [ 1, 5 ],
+        "movepool": [ "Attack" ],
+
+        "HP": 50,
+        "MP": 0,
+        "ATK": 20,
+        "DEF": 10,
+        "MATK": 0,
+        "MDEF": 20,
+        "SPD": 15,
+        "LUCK": 20
+      }
+    }
+  ]
+}

@@ -1,0 +1,69 @@
+{
+  "Skill": [
+    {
+      "": {
+
+        "name": "None",
+        "type": "None",
+        "category": "None",
+        "element": "None",
+        "power": 0,
+        "contact": "false",
+        "mpcost": 0
+
+      }
+    },
+    {
+      "": {
+
+        "name": "Attack",
+        "type": "Auto",
+        "category": "Physical",
+        "element": "Normal",
+        "power": 10,
+        "contact": "true",
+        "mpcost": 0
+
+      }
+    },
+    {
+      "": {
+
+        "name": "Ice I",
+        "type": "Skill",
+        "category": "Magical",
+        "element": "Ice",
+        "power": 30,
+        "contact": "true",
+        "mpcost": 45
+
+      }
+    },
+    {
+      "": {
+
+        "name": "Fire I",
+        "type": "Skill",
+        "category": "Magical",
+        "element": "Fire",
+        "power": 20,
+        "contact": "true",
+        "mpcost": 25
+
+      }
+    },
+    {
+      "": {
+
+        "name": "Cure I",
+        "type": "Skill",
+        "category": "Magical",
+        "element": "Holy",
+        "power": 20,
+        "contact": "false",
+        "mpcost": 25
+
+      }
+    }
+  ]
+}
