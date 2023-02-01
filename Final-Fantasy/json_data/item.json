@@ -3,7 +3,7 @@
     {
       "": {
 
-        "id": 0,
+        "id": 0.0,
         "name": "Potion",
         "category": "Recovery",
         "description": "Heals for 50 hp",
@@ -15,7 +15,7 @@
     {
       "": {
 
-        "id": 1,
+        "id": 1.0,
         "name": "Bomb Fragment",
         "category": "Offensive",
         "description": "Deals 20 fire damage to an enemy",

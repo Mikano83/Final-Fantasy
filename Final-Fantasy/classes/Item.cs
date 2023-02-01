@@ -12,7 +12,7 @@ namespace Final_Fantasy
         private string _itemname;
         private string _itemcategory;
         private string _itemdescription;
-        private Skill _itemeffect;
+        private Skill? _itemeffect;
         private int _itemprice;
         private int _itemvalue;
 
@@ -29,10 +29,12 @@ namespace Final_Fantasy
 
         public int Itemid { get { return _itemid;} }
         public string Itemname { get { return _itemname;} }
-        public string Category { get { return _itemcategory;} }
+        public string ItemCategory { get { return _itemcategory;} }
         public string ItemDescription { get { return _itemdescription;} }
-        public Skill Sitemeffect { get { return _itemeffect; } }
+        public Skill? ItemEffect { get { return _itemeffect; } }
         public int Itemprice { get { return _itemprice;} }
         public int ItemValue { get { return _itemvalue;} }
+
+
     }
 }
