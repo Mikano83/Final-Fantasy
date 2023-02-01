@@ -62,18 +62,5 @@ namespace Final_Fantasy
 
             SyncLevelStat(this);
         }
-
-        internal void setExp(int? expYield)
-        {
-            Exp += expYield;
-
-            //manage leveling system
-            if (Exp >= CalcExp("nextLevelExp", this))
-            {
-                Level += 1;
-                Console.WriteLine(Name + " leveled up !\n" + Name + " is level : " + Level + "\n");
-                SyncLevelStat(this);
-            }
-        }
     }
 }

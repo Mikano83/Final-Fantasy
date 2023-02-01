@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -8,17 +9,17 @@ namespace Final_Fantasy
 {
     internal class Combat
     {
-        private static Creature _playerEntity;
-        private static Creature _opponentEntity;
+        private static Entity[] _playerEntities;
+        private static Entity[] _opponentEntities;
 
-        public static Creature PlayerEntity { get { return _playerEntity; } set { _playerEntity = value; } }
-        public static Creature OpponentEntity { get { return _opponentEntity; } set { _opponentEntity = value; } }
+        public static Entity[] PlayerEntities { get { return _playerEntities; } set { _playerEntities = value; } }
+        public static Entity[] OpponentEntities { get { return _opponentEntities; } set { _opponentEntities = value; } }
 
 
         public Combat(Team Player, Team Ennemy)
         {
-            PlayerEntity = (Creature)Player.TeamContent[0];
-            OpponentEntity = (Creature)Ennemy.TeamContent[0];
+            PlayerEntities = Player.TeamContent;
+            OpponentEntities = Ennemy.TeamContent;
         }
 
         public void ExecuteTurn(Skill playerMove, Skill opponentMove)
@@ -26,101 +27,27 @@ namespace Final_Fantasy
             // ===== Combat Turn =====
 
             bool playerPlaysFirst;
-            bool isCritical = false;
-            float CriticalMultiplier;
-            int R = 0;
-            float STAB = 1;
-            float TypeMatchup = 1;
 
-            playerPlaysFirst = CheckPriority(playerMove, opponentMove);
+            playerPlaysFirst = CheckPriority();
 
-            // ===== Stats Clash (Mods not included : concerns items, certain moves/talents or specific conditions like weather =====
+            // ===== Stats Clash =====
 
             if (playerPlaysFirst)
             {
-
                 // ----- Player Turn -----
 
-                CriticalMultiplier = 1;
-
-                isCritical = CheckCritical(playerMove);
-                if (isCritical)
+                for(int i = 0; i < PlayerEntities.Length; i++)
                 {
-                    CriticalMultiplier = 1.5f;
-                }
-
-                //rand = random value comprised between 217 and 255 included | R = (rand x 100) / 255
-                Random rnd = new Random();
-                R = ((rnd.Next(0, 101) % ((255 - 217) + 1) + 217) * 100) / 255;
-
-                //check STAB and Type weaknesses
-                STAB = CheckStab(PlayerEntity.Type, playerMove.Type);
-                TypeMatchup = CheckTypeMatchup(playerMove.Type, OpponentEntity.Type);
-
-                if (playerMove.Category == "Physical")
-                {
-                    Console.WriteLine(PlayerEntity.Name + " did : " + ((int)(((((((PlayerEntity.Level * 2 / 5) + 2) * playerMove.Power * PlayerEntity.ATK / 2) / OpponentEntity.DEF) /* x Mod 1 */) + 2) /* Mod2 */ * R / 100) * STAB * TypeMatchup /* x Mod3 */ * CriticalMultiplier) + " damage !");
-                    OpponentEntity.CurrentHP = (int)(OpponentEntity.CurrentHP - (((((((PlayerEntity.Level * 2 / 5) + 2) * playerMove.Power * PlayerEntity.ATK / 2) / OpponentEntity.DEF) /* x Mod 1 */) + 2) /* x Mod2 */ * R / 100) * STAB * TypeMatchup /* x Mod3 */ * CriticalMultiplier);
-                }
-                else if (playerMove.Category == "Magical")
-                {
-                    Console.WriteLine(PlayerEntity.Name + " did : " + ((int)(((((((PlayerEntity.Level * 2 / 5) + 2) * playerMove.Power * PlayerEntity.MATK / 2) / OpponentEntity.MDEF) /* x Mod 1 */) + 2) /* Mod2 */ * R / 100) * STAB * TypeMatchup /* x Mod3 */ * CriticalMultiplier) + " damage !");
-                    OpponentEntity.CurrentHP = (int)(OpponentEntity.CurrentHP - (((((((PlayerEntity.Level * 2 / 5) + 2) * playerMove.Power * PlayerEntity.MATK / 2) / OpponentEntity.MDEF) /* x Mod 1 */) + 2) /* x Mod2 */ * R / 100) * STAB * TypeMatchup /* x Mod3 */ * CriticalMultiplier);
-                }
-
-                //Manage Stat reduction moves
-
-                else if (playerMove.Category== "Status")
-                {
-                    StatusMoveCalc(playerMove.Name, OpponentEntity, PlayerEntity);
-                }
-
-                if (OpponentEntity.CurrentHP <= 0)
-                {
-                    Console.WriteLine("Ennemy " + OpponentEntity.Name + " has fainted, " + OpponentEntity.ExpYield + " exp obtained ! \n");
-                    PlayerEntity.setExp(OpponentEntity.ExpYield);
-                    return;
+                    DamageCalc(PlayerEntities[i], OpponentEntities[i], playerMove);
+                    KillResult(PlayerEntities[i], OpponentEntities[i]);
                 }
 
                 // ----- Ai Turn -----
 
-                CriticalMultiplier = 1;
-
-                isCritical = CheckCritical(playerMove);
-                if (isCritical)
+                for (int i = 0; i < OpponentEntities.Length; i++)
                 {
-                    CriticalMultiplier = 1.5f;
-                }
-
-                R = ((rnd.Next(0, 101) % ((255 - 217) + 1) + 217) * 100) / 255;
-
-                //check STAB and Type weaknesses
-                STAB = CheckStab(OpponentEntity.Type, opponentMove.Type);
-                TypeMatchup = CheckTypeMatchup(opponentMove.Type, PlayerEntity.Type);
-
-                if (opponentMove.Category == "Physical")
-                {
-                    Console.WriteLine(OpponentEntity.Name + " did : " + ((int)((((((OpponentEntity.Level * 2 / 5) + 2) * opponentMove.Power * OpponentEntity.ATK / 2) / PlayerEntity.DEF) /* x Mod 1 */) + 2) /* Mod2 */ * R / 100) * STAB * TypeMatchup /* x Mod3 */ * CriticalMultiplier + " damage !");
-                    PlayerEntity.CurrentHP = (int)(PlayerEntity.CurrentHP - (((((((OpponentEntity.Level * 2 / 5) + 2) * opponentMove.Power * OpponentEntity.ATK / 2) / PlayerEntity.DEF) /* x Mod 1 */) + 2) /* Mod2 */ * R / 100) * STAB * TypeMatchup /* x Mod3 */ * CriticalMultiplier);
-                }
-                else if (opponentMove.Category == "Magical")
-                {
-                    Console.WriteLine(OpponentEntity.Name + " did : " + ((int)((((((OpponentEntity.Level * 2 / 5) + 2) * opponentMove.Power * OpponentEntity.MATK / 2) / PlayerEntity.MDEF) /* x Mod 1 */) + 2) /* Mod2 */ * R / 100) * STAB * TypeMatchup /* x Mod3 */ * CriticalMultiplier + " damage !");
-                    PlayerEntity.CurrentHP = (int)(PlayerEntity.CurrentHP - (((((((OpponentEntity.Level * 2 / 5) + 2) * opponentMove.Power * OpponentEntity.MATK / 2) / PlayerEntity.MDEF) /* x Mod 1 */) + 2) /* Mod2 */ * R / 100) * STAB * TypeMatchup /* x Mod3 */ * CriticalMultiplier);
-                }
-
-                //Manage Stat reduction moves
-
-                else if (opponentMove.Category == "Status")
-                {
-                    StatusMoveCalc(opponentMove.Name, PlayerEntity, OpponentEntity);
-                }
-
-                if (PlayerEntity.CurrentHP <= 0)
-                {
-                    Console.WriteLine(PlayerEntity.Name + " fainted ! ");
-                    //add party check to determine if fight is lost
-                    return;
+                    DamageCalc(OpponentEntities[i], PlayerEntities[i], playerMove);
+                    KillResult(OpponentEntities[i], PlayerEntities[i]);
                 }
             }
 
@@ -129,122 +56,56 @@ namespace Final_Fantasy
 
                 // ----- Ai Turn -----
 
-                CriticalMultiplier = 1;
-
-                isCritical = CheckCritical(playerMove);
-                if (isCritical)
+                for (int i = 0; i < OpponentEntities.Length; i++)
                 {
-                    CriticalMultiplier = 1.5f;
-                }
-
-                //rand = random value comprised between 217 and 255 included | R = (rand x 100) / 255
-                Random rnd = new Random();
-                R = ((rnd.Next(0, 101) % ((255 - 217) + 1) + 217) * 100) / 255;
-
-                //check STAB and Type weaknesses
-                STAB = CheckStab(OpponentEntity.Type, opponentMove.Type);
-                TypeMatchup = CheckTypeMatchup(opponentMove.Type, PlayerEntity.Type);
-
-                if (opponentMove.Category == "Physical")
-                {
-                    Console.WriteLine(OpponentEntity.Name + " did : " + ((int)((((((OpponentEntity.Level * 2 / 5) + 2) * opponentMove.Power * OpponentEntity.ATK / 2) / PlayerEntity.DEF) /* x Mod 1 */) + 2) /* Mod2 */ * R / 100) * STAB * TypeMatchup /* x Mod3 */ * CriticalMultiplier + " damage !");
-                    PlayerEntity.CurrentHP = (int)(PlayerEntity.CurrentHP - (((((((OpponentEntity.Level * 2 / 5) + 2) * opponentMove.Power * OpponentEntity.ATK / 2) / PlayerEntity.DEF) /* x Mod 1 */) + 2) /* Mod2 */ * R / 100) * STAB * TypeMatchup /* x Mod3 */ * CriticalMultiplier);
-                }
-                else if (opponentMove.Category == "Magical")
-                {
-                    Console.WriteLine(OpponentEntity.Name + " did : " + ((int)((((((OpponentEntity.Level * 2 / 5) + 2) * opponentMove.Power * OpponentEntity.MATK / 2) / PlayerEntity.MDEF) /* x Mod 1 */) + 2) /* Mod2 */ * R / 100) * STAB * TypeMatchup /* x Mod3 */ * CriticalMultiplier + " damage !");
-                    PlayerEntity.CurrentHP = (int)(PlayerEntity.CurrentHP - (((((((OpponentEntity.Level * 2 / 5) + 2) * opponentMove.Power * OpponentEntity.MATK / 2) / PlayerEntity.MDEF) /* x Mod 1 */) + 2) /* Mod2 */ * R / 100) * STAB * TypeMatchup /* x Mod3 */ * CriticalMultiplier);
-                }
-
-                //Manage Stat reduction moves
-
-                else if (opponentMove.Category == "Status")
-                {
-                    StatusMoveCalc(opponentMove.Name, PlayerEntity, OpponentEntity);
-                }
-
-                if (PlayerEntity.CurrentHP <= 0)
-                {
-                    Console.WriteLine(PlayerEntity.Name + " fainted ! ");
-                    //add party check to determine if fight is lost
-                    return;
+                    //PlayerEntities[i] member should take random player selection && playerMove should also take skill selection return value
+                    DamageCalc(OpponentEntities[i], PlayerEntities[i], playerMove);
+                    KillResult(OpponentEntities[i], PlayerEntities[i]);
                 }
 
                 // ----- Player Turn -----
 
-                CriticalMultiplier = 1;
-
-                isCritical = CheckCritical(playerMove);
-                if (isCritical)
+                for (int i = 0; i < PlayerEntities.Length; i++)
                 {
-                    CriticalMultiplier = 1.5f;
-                }
-
-                //rand = random value comprised between 217 and 255 included | R = (rand x 100) / 255
-                R = ((rnd.Next(0, 101) % ((255 - 217) + 1) + 217) * 100) / 255;
-
-                //check STAB and Type weaknesses
-                STAB = CheckStab(PlayerEntity.Type, playerMove.Type);
-                TypeMatchup = CheckTypeMatchup(playerMove.Type, OpponentEntity.Type);
-
-                if (playerMove.Category == "Physical")
-                {
-                    Console.WriteLine(PlayerEntity.Name + " did : " + ((int)((((((PlayerEntity.Level * 2 / 5) + 2) * playerMove.Power * PlayerEntity.ATK / 2) / OpponentEntity.DEF) /* x Mod 1 */) + 2) /* Mod2 */ * R / 100) * STAB * TypeMatchup /* x Mod3 */ * CriticalMultiplier + " damage !");
-                    OpponentEntity.CurrentHP = (int)(OpponentEntity.CurrentHP - (((((((PlayerEntity.Level * 2 / 5) + 2) * playerMove.Power * PlayerEntity.ATK / 2) / OpponentEntity.DEF) /* x Mod 1 */) + 2) /* x Mod2 */ * R / 100) * STAB * TypeMatchup /* x Mod3 */ * CriticalMultiplier);
-                }
-                else if (playerMove.Category == "Magical")
-                {
-                    Console.WriteLine(PlayerEntity.Name + " did : " + ((int)((((((PlayerEntity.Level * 2 / 5) + 2) * playerMove.Power * PlayerEntity.MATK / 2) / OpponentEntity.MDEF) /* x Mod 1 */) + 2) /* Mod2 */ * R / 100) * STAB * TypeMatchup /* x Mod3 */ * CriticalMultiplier + " damage !");
-                    OpponentEntity.CurrentHP = (int)(OpponentEntity.CurrentHP - (((((((PlayerEntity.Level * 2 / 5) + 2) * playerMove.Power * PlayerEntity.MATK / 2) / OpponentEntity.MDEF) /* x Mod 1 */) + 2) /* x Mod2 */ * R / 100) * STAB * TypeMatchup /* x Mod3 */ * CriticalMultiplier);
-                }
-
-                //Manage Stat reduction moves
-
-                else if (playerMove.Category == "Status")
-                {
-                    StatusMoveCalc(playerMove.Name, OpponentEntity, PlayerEntity);
-                }
-
-                if (OpponentEntity.CurrentHP <= 0)
-                {
-                    Console.WriteLine("Ennemy " + OpponentEntity.Name + " has fainted, " + OpponentEntity.ExpYield + " exp obtained ! \n");
-                    PlayerEntity.setExp(OpponentEntity.ExpYield);
-                    return;
+                    //OpponentEntities[i] member should take ennemy selection function return value && playerMove should also take skill selection return value
+                    DamageCalc(PlayerEntities[i], OpponentEntities[i], playerMove);
+                    KillResult(PlayerEntities[i], OpponentEntities[i]);
                 }
             }
             return;
         }
 
-        public bool CheckPriority(Skill playerMove, Skill opponentMove)
+        public bool CheckPriority()
         {
-            // ===== Turn Play Order =====
+            // ===== Turn Play Order ====
 
-            //priority moves !!!!!!!Not implemented!!!!!!!!!!!
-            if (playerMove.Name == "[PRIORITY ATTACK]")
+            int PlayerTeamSpeed = 0;
+            int OpponentTeamSpeed = 0;
+
+            foreach (Entity entity in PlayerEntities)
             {
-                if (playerMove.Name == opponentMove.Name)
+                if (entity == null)
                 {
-
-                    Random rnd = new Random();
-                    if ((rnd.Next(2) % 2) == 0)
-                    {
-                        return true;
-                    }
-                    else
-                    {
-                        return false;
-                    }
+                    break;
                 }
-                return true;
+                PlayerTeamSpeed += entity.SPD;
+            }
+            foreach (Entity entity in OpponentEntities)
+            {
+                if (entity == null)
+                {
+                    break;
+                }
+                OpponentTeamSpeed += entity.SPD;
             }
 
             //Speed comparison
-            if (PlayerEntity.SPD > OpponentEntity.SPD)
+            if (PlayerTeamSpeed > OpponentTeamSpeed)
             {
                 return true;
             }
             //Manage comparison when both speed are equal (random 50/50)
-            else if (PlayerEntity.SPD == OpponentEntity.SPD)
+            else if (PlayerTeamSpeed == OpponentTeamSpeed)
             {
                 Random rnd = new Random();
                 if ((rnd.Next(2) % 2) == 0)
@@ -260,6 +121,38 @@ namespace Final_Fantasy
             {
                 return false;
             }
+        }
+
+        public void StatusMoveCalc(Entity targetEntity, Entity attackingEntity, string attackName)
+        {
+            //Defense reduction moves
+            if (attackName == "Tail Whip")
+            {
+                if (targetEntity.DEFStage >= -6)
+                {
+                    targetEntity.DEFStage -= 1;
+                }
+                else
+                {
+                    Console.WriteLine("Ennemy Defense can't go any lower !");
+                }
+            }
+
+            //Atk boost moves
+            else if (attackName == "Hone Claws")
+            {
+                if (targetEntity.ATKStage <= 6)
+                {
+                    attackingEntity.ATKStage += 1;
+                }
+                else
+                {
+                    Console.WriteLine(attackingEntity.Name + "'s Attack can't go any higher !");
+                }
+            }
+
+            Entity.SyncLevelStat(targetEntity);
+            Entity.SyncLevelStat(attackingEntity);
         }
 
         public bool CheckCritical(Skill selectMove)
@@ -339,36 +232,123 @@ namespace Final_Fantasy
             }
         }
 
-        public void StatusMoveCalc(string attackName, Creature targetEntity, Creature attackingEntity)
+        public void DamageCalc(Entity attackingEntity, Entity targetEntity, Skill attack)
         {
-            //Defense reduction moves
-            if (attackName == "Tail Whip")
+            if(attackingEntity == null || targetEntity == null || attackingEntity.CurrentHP <= 0)
             {
-                if (targetEntity.DEFStage >= -6)
-                {
-                    targetEntity.DEFStage -= 1;
-                }
-                else
-                {
-                    Console.WriteLine("Ennemy Defense can't go any lower !");
-                }
+                return;
             }
 
-            //Atk boost moves
-            else if (attackName == "Hone Claws")
+            bool isCritical = false;
+            float CriticalMultiplier;
+            int R = 0;
+            float STAB = 1;
+            float TypeMatchup = 1;
+
+            CriticalMultiplier = 1;
+
+            isCritical = CheckCritical(attack);
+            if (isCritical)
             {
-                if (targetEntity.ATKStage <= 6)
-                {
-                    attackingEntity.ATKStage += 1;
-                }
-                else
-                {
-                    Console.WriteLine(attackingEntity.Name + "'s Attack can't go any higher !");
-                }
+                CriticalMultiplier = 1.5f;
             }
 
-            Entity.SyncLevelStat(targetEntity);
-            Entity.SyncLevelStat(attackingEntity);
+            //rand = random value comprised between 217 and 255 included | R = (rand x 100) / 255
+            Random rnd = new Random();
+            R = ((rnd.Next(0, 101) % ((255 - 217) + 1) + 217) * 100) / 255;
+
+            //check STAB and Type weaknesses
+            STAB = CheckStab(attackingEntity.Type, attack.Type);
+            TypeMatchup = CheckTypeMatchup(attack.Type, targetEntity.Type);
+
+            //================ PHYSICAL ATTACK ===================
+
+            if (attack.Category == "Physical")
+            {
+                Console.WriteLine(
+                    attackingEntity.Name 
+                    + " did : " + ((int)(((((
+
+                    (attackingEntity.Level * 2 / 5) + 2) 
+
+                    * attack.Power * attackingEntity.ATK / 2) 
+
+                    / targetEntity.DEF)) + 2) * R / 100) 
+
+                    * STAB * TypeMatchup * CriticalMultiplier 
+
+                    + " damage !");
+
+
+                targetEntity.CurrentHP = 
+                    (int)(targetEntity.CurrentHP 
+
+                    - (((((((attackingEntity.Level * 2 / 5) + 2)
+
+                    * attack.Power * attackingEntity.ATK / 2) 
+
+                    / targetEntity.DEF)) + 2) * R / 100) 
+
+                    * STAB * TypeMatchup * CriticalMultiplier);
+            }
+
+            //================ MAGICAL ATTACK ===================
+
+            else if (attack.Category == "Magical")
+            {
+                Console.WriteLine(
+                    attackingEntity.Name + " did : " + ((int)(((((
+
+                    (attackingEntity.Level * 2 / 5) + 2)
+
+                    * attack.Power * attackingEntity.MATK / 2)
+
+                    / targetEntity.MDEF)) + 2) * R / 100)
+
+                    * STAB * TypeMatchup * CriticalMultiplier
+
+                    + " damage !");
+
+                targetEntity.CurrentHP =
+                    (int)(targetEntity.CurrentHP
+
+                    - (((((((attackingEntity.Level * 2 / 5) + 2)
+
+                    * attack.Power * attackingEntity.MATK / 2)
+
+                    / targetEntity.MDEF)) + 2) * R / 100)
+
+                    * STAB * TypeMatchup * CriticalMultiplier);
+            }
+
+            //================ SPECIAL ATTACK ===================
+
+            else if (attack.Category == "Status")
+            {
+                StatusMoveCalc(targetEntity, attackingEntity, attack.Name);
+            }
+        }
+
+        public void KillResult(Entity attackingEntity, Entity targetEntity)
+        {
+            if (attackingEntity == null || targetEntity == null)
+            {
+                return;
+            }
+
+            if (targetEntity.CurrentHP <= 0)
+            {
+                Console.WriteLine("Ennemy " + targetEntity.Name + " has fainted, " + targetEntity.ExpYield + " exp obtained ! \n");
+                attackingEntity.setExp(targetEntity.ExpYield);
+                return;
+            }
+
+            else if (attackingEntity.CurrentHP <= 0)
+            {
+                Console.WriteLine(attackingEntity.Name + " fainted ! ");
+                //add party check to determine if fight is lost
+                return;
+            }
         }
     }
 }

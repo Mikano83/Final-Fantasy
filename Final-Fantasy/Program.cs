@@ -17,66 +17,105 @@ namespace Final_Fantasy
             //System.IO.File.WriteAllText(@"C:\temp\output.txt", result);
 
 
-            Creature Taotie1 = new Creature("Taotie");
-            Creature Garru1 = new Creature("Garru");
+            Creature Ally1 = new Creature("Taotie");
+            Ally1.Name = "Ally1";
+            Creature Ally2 = new Creature("Taotie");
+            Ally2.Name = "Ally2";
+            Creature Ally3 = new Creature("Taotie");
+            Ally3.Name = "Ally3";
+            Creature Ennemy1 = new Creature("Taotie");
+            Ennemy1.Name = "Ennemy1";
+            Creature Ennemy2 = new Creature("Taotie");
+            Ennemy2.Name = "Ennemy2";
+            Creature Ennemy3 = new Creature("Taotie");
+            Ennemy3.Name = "Ennemy3";
 
-            Console.WriteLine(Taotie1.Name);
-            Console.WriteLine("Level : " + Taotie1.Level);
-            Console.WriteLine("Type : " + Taotie1.Type + "\n");
+            Console.WriteLine(Ally1.Name);
+            Console.WriteLine("Level : " + Ally1.Level);
 
-            Console.WriteLine("Current HP : " + Taotie1.CurrentHP);
-            Console.WriteLine("Current MP : " + Taotie1.CurrentMP);
-            Console.WriteLine("MAX HP : " + Taotie1.MaxHP);
-            Console.WriteLine("MAX MP : " + Taotie1.MaxMP + "\n");
+            Console.WriteLine("Current HP : " + Ally1.CurrentHP);
+            Console.WriteLine("Current MP : " + Ally1.CurrentMP + "\n");
 
-            Console.WriteLine("Attack : " + Taotie1.ATK);
-            Console.WriteLine("Defense : " + Taotie1.DEF);
-            Console.WriteLine("Magical Attack : " + Taotie1.MATK);
-            Console.WriteLine("Magical Defense : " + Taotie1.MDEF);
-            Console.WriteLine("Speed : " + Taotie1.SPD);
-            Console.WriteLine("Luck : " + Taotie1.LUCK + "\n\n");
+            Console.WriteLine(Ally2.Name);
+            Console.WriteLine("Level : " + Ally2.Level);
+
+            Console.WriteLine("Current HP : " + Ally2.CurrentHP);
+            Console.WriteLine("Current MP : " + Ally2.CurrentMP + "\n");
+
+            Console.WriteLine(Ally3.Name);
+            Console.WriteLine("Level : " + Ally3.Level);
+
+            Console.WriteLine("Current HP : " + Ally3.CurrentHP);
+            Console.WriteLine("Current MP : " + Ally3.CurrentMP + "\n\n");
 
 
-            Console.WriteLine(Garru1.Name);
-            Console.WriteLine("Level : " + Garru1.Level);
-            Console.WriteLine("Type : " + Garru1.Type + "\n");
+            Console.WriteLine(Ennemy1.Name);
+            Console.WriteLine("Level : " + Ennemy1.Level);
 
-            Console.WriteLine("Current HP : " + Garru1.CurrentHP);
-            Console.WriteLine("Current MP : " + Garru1.CurrentMP);
-            Console.WriteLine("MAX HP : " + Garru1.MaxHP);
-            Console.WriteLine("MAX MP : " + Garru1.MaxMP + "\n");
+            Console.WriteLine("Current HP : " + Ennemy1.CurrentHP);
+            Console.WriteLine("Current MP : " + Ennemy1.CurrentMP + "\n");
 
-            Console.WriteLine("Attack : " + Garru1.ATK);
-            Console.WriteLine("Defense : " + Garru1.DEF);
-            Console.WriteLine("Magical Attack : " + Garru1.MATK);
-            Console.WriteLine("Magical Defense : " + Garru1.MDEF);
-            Console.WriteLine("Speed : " + Garru1.SPD);
-            Console.WriteLine("Luck : " + Garru1.LUCK + "\n\n");
+            Console.WriteLine(Ennemy2.Name);
+            Console.WriteLine("Level : " + Ennemy2.Level);
+
+            Console.WriteLine("Current HP : " + Ennemy2.CurrentHP);
+            Console.WriteLine("Current MP : " + Ennemy2.CurrentMP + "\n");
+
+            Console.WriteLine(Ennemy3.Name);
+            Console.WriteLine("Level : " + Ennemy3.Level);
+
+            Console.WriteLine("Current HP : " + Ennemy3.CurrentHP);
+            Console.WriteLine("Current MP : " + Ennemy3.CurrentMP + "\n\n");
 
             Team PlayerTeam = new Team();
             Team EnnemyTeam = new Team();
 
-            PlayerTeam.TeamContent[0] = Taotie1;
-            EnnemyTeam.TeamContent[0] = Garru1;
+            PlayerTeam.TeamContent[0] = Ally1;
+            PlayerTeam.TeamContent[1] = Ally2;
+            PlayerTeam.TeamContent[2] = Ally3;
+            EnnemyTeam.TeamContent[0] = Ennemy1;
+            EnnemyTeam.TeamContent[1] = Ennemy2;
+            EnnemyTeam.TeamContent[2] = Ennemy3;
 
             Combat wildCombat = new Combat(PlayerTeam, EnnemyTeam);
-            wildCombat.ExecuteTurn(PlayerTeam.TeamContent[0].Movepool[0], EnnemyTeam.TeamContent[0].Movepool[1]);
+            wildCombat.ExecuteTurn(PlayerTeam.TeamContent[0].Movepool[0], EnnemyTeam.TeamContent[0].Movepool[0]);
 
-            Console.WriteLine(Garru1.Name);
-            Console.WriteLine("Level : " + Garru1.Level);
-            Console.WriteLine("Type : " + Garru1.Type + "\n");
+            Console.WriteLine("\n" + Ally1.Name);
+            Console.WriteLine("Level : " + Ally1.Level);
 
-            Console.WriteLine("Current HP : " + Garru1.CurrentHP);
-            Console.WriteLine("Current MP : " + Garru1.CurrentMP);
-            Console.WriteLine("MAX HP : " + Garru1.MaxHP);
-            Console.WriteLine("MAX MP : " + Garru1.MaxMP + "\n");
+            Console.WriteLine("Current HP : " + Ally1.CurrentHP);
+            Console.WriteLine("Current MP : " + Ally1.CurrentMP + "\n");
 
-            Console.WriteLine("Attack : " + Garru1.ATK);
-            Console.WriteLine("Defense : " + Garru1.DEF);
-            Console.WriteLine("Magical Attack : " + Garru1.MATK);
-            Console.WriteLine("Magical Defense : " + Garru1.MDEF);
-            Console.WriteLine("Speed : " + Garru1.SPD);
-            Console.WriteLine("Luck : " + Garru1.LUCK + "\n\n");
+            Console.WriteLine(Ally2.Name);
+            Console.WriteLine("Level : " + Ally2.Level);
+
+            Console.WriteLine("Current HP : " + Ally2.CurrentHP);
+            Console.WriteLine("Current MP : " + Ally2.CurrentMP + "\n");
+
+            Console.WriteLine(Ally3.Name);
+            Console.WriteLine("Level : " + Ally3.Level);
+
+            Console.WriteLine("Current HP : " + Ally3.CurrentHP);
+            Console.WriteLine("Current MP : " + Ally3.CurrentMP + "\n\n");
+
+
+            Console.WriteLine(Ennemy1.Name);
+            Console.WriteLine("Level : " + Ennemy1.Level);
+
+            Console.WriteLine("Current HP : " + Ennemy1.CurrentHP);
+            Console.WriteLine("Current MP : " + Ennemy1.CurrentMP + "\n");
+
+            Console.WriteLine(Ennemy2.Name);
+            Console.WriteLine("Level : " + Ennemy2.Level);
+
+            Console.WriteLine("Current HP : " + Ennemy2.CurrentHP);
+            Console.WriteLine("Current MP : " + Ennemy2.CurrentMP + "\n");
+
+            Console.WriteLine(Ennemy3.Name);
+            Console.WriteLine("Level : " + Ennemy3.Level);
+
+            Console.WriteLine("Current HP : " + Ennemy3.CurrentHP);
+            Console.WriteLine("Current MP : " + Ennemy3.CurrentMP + "\n\n");
         }
     }
 }

@@ -17,6 +17,20 @@ namespace Final_Fantasy
                 entity.MaxHP += (entity.MaxHP * 2 * entity.Level) / 100 + 10 + entity.Level;
                 entity.CurrentHP = entity.MaxHP;
             }
+            else
+            {
+                entity.MaxMP += (entity.MaxMP * 2 * entity.Level) / 100 - 10 + entity.Level;
+            }
+
+            if (entity.CurrentMP == entity.MaxMP)
+            {
+                entity.MaxMP += (entity.MaxMP * 2 * entity.Level) / 100 - 10 + entity.Level;
+                entity.CurrentMP = entity.MaxMP;
+            }
+            else
+            {
+                entity.MaxMP += (entity.MaxMP * 2 * entity.Level) / 100 - 10 + entity.Level;
+            }
 
             entity.ATK += ((entity.ATK * 2 * entity.Level) / 100 + 5);
 
@@ -50,6 +64,19 @@ namespace Final_Fantasy
                 return expResult;
             }
             throw new ArgumentException();
+        }
+
+        public void setExp(int? expYield)
+        {
+            Exp += expYield;
+
+            //manage leveling system
+            if (Exp >= CalcExp("nextLevelExp", this))
+            {
+                Level += 1;
+                Console.WriteLine(Name + " leveled up !\n" + Name + " is level : " + Level + "\n");
+                SyncLevelStat(this);
+            }
         }
 
         public static float ProcessMultiplier(int StageMod, string StageType)
