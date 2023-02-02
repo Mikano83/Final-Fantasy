@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Final_Fantasy
 {
-    internal class Creature : Entity
+    public class Creature : Entity
     {
         public Creature(string identifier)
         {
@@ -61,6 +61,7 @@ namespace Final_Fantasy
             _luckStage = 1;
 
             SyncLevelStat(this);
+            CalcExp("exp", this);
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json.Linq;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
@@ -7,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Final_Fantasy
 {
-    internal class Entity
+    public class Entity
     {
         public static void SyncLevelStat(Entity entity)
         {
@@ -49,6 +50,7 @@ namespace Final_Fantasy
         {
             int expResult;
 
+            //base exp stat (min exp to be a set level)
             if (selectValue == "exp")
             {
                 expResult = (int)(6.0f / 5.0f * Math.Pow(entity.Level,3) - 15 * Math.Pow(entity.Level, 2) + 100 * entity.Level - 140);
@@ -88,43 +90,43 @@ namespace Final_Fantasy
                 switch(StageMod)
                 {
                     case -6:
-                        processedStageMod = 2 / 8;
+                        processedStageMod = 2.0f / 8.0f;
                         break;
                     case -5:
-                        processedStageMod = 2 / 7;
+                        processedStageMod = 2.0f / 7.0f;
                         break;
                     case -4:
-                        processedStageMod = 2 / 6;
+                        processedStageMod = 2.0f / 6.0f;
                         break;
                     case -3:
-                        processedStageMod = 2 / 5;
+                        processedStageMod = 2.0f / 5.0f;
                         break;
                     case -2:
-                        processedStageMod = 2 / 4;
+                        processedStageMod = 2.0f / 4.0f;
                         break;
                     case -1:
-                        processedStageMod = 2 / 3;
+                        processedStageMod = 2.0f / 3.0f;
                         break;
                     case 0:
-                        processedStageMod = 1;
+                        processedStageMod = 1.0f;
                         break;
                     case 1:
-                        processedStageMod = 3 / 2;
+                        processedStageMod = 3.0f / 2.0f;
                         break;
                     case 2:
-                        processedStageMod = 4 / 2;
+                        processedStageMod = 4.0f / 2.0f;
                         break;
                     case 3:
-                        processedStageMod = 5 / 2;
+                        processedStageMod = 5.0f / 2.0f;
                         break;
                     case 4:
-                        processedStageMod = 6 / 2;
+                        processedStageMod = 6.0f / 2.0f;
                         break;
                     case 5:
-                        processedStageMod = 7 / 2;
+                        processedStageMod = 7.0f / 2.0f;
                         break;
                     case 6:
-                        processedStageMod = 8 / 2;
+                        processedStageMod = 8.0f / 2.0f;
                         break;
                     default:
                         Console.WriteLine("Stage Multiplier Processing failed : invalid value " + StageMod);
@@ -137,43 +139,43 @@ namespace Final_Fantasy
                 switch(StageMod)
                 {
                     case -6:
-                        processedStageMod = 3 / 9;
+                        processedStageMod = 3.0f / 9.0f;
                         break;
                     case -5:
-                        processedStageMod = 3 / 8;
+                        processedStageMod = 3.0f / 8.0f;
                         break;
                     case -4:
-                        processedStageMod = 3 / 7;
+                        processedStageMod = 3.0f / 7.0f;
                         break;
                     case -3:
-                        processedStageMod = 3 / 6;
+                        processedStageMod = 3.0f / 6.0f;
                         break;
                     case -2:
-                        processedStageMod = 3 / 5;
+                        processedStageMod = 3.0f / 5.0f;
                         break;
                     case -1:
-                        processedStageMod = 3 / 4;
+                        processedStageMod = 3.0f / 4.0f;
                         break;
                     case 0:
-                        processedStageMod = 1;
+                        processedStageMod = 1.0f;
                         break;
                     case 1:
-                        processedStageMod = 4 / 3;
+                        processedStageMod = 4.0f / 3.0f;
                         break;
                     case 2:
-                        processedStageMod = 5 / 3;
+                        processedStageMod = 5.0f / 3.0f;
                         break;
                     case 3:
-                        processedStageMod = 6 / 3;
+                        processedStageMod = 6.0f / 3.0f;
                         break;
                     case 4:
-                        processedStageMod = 7 / 3;
+                        processedStageMod = 7.0f / 3.0f;
                         break;
                     case 5:
-                        processedStageMod = 8 / 3;
+                        processedStageMod = 8.0f / 3.0f;
                         break;
                     case 6:
-                        processedStageMod = 9 / 3;
+                        processedStageMod = 9.0f / 3.0f;
                         break;
                     default:
                         Console.WriteLine("Stage Multiplier Processing failed : invalid value " + StageMod);
@@ -182,6 +184,55 @@ namespace Final_Fantasy
             }
 
             return processedStageMod;
+        }
+
+        //====================== AI FUNCTIONS ================================
+        public Skill WildAI()
+        {
+            bool hasChosen = false;
+            int selectedMove;
+
+            Random rnd = new Random();
+
+            while (!hasChosen)
+            {
+                selectedMove = rnd.Next(0, Movepool.Count() - 1);
+
+                //Check if entity has enough mana to use the attack
+                if (Movepool[selectedMove].MPCost <= this.CurrentMP)
+                {
+                    hasChosen = true;
+                    return Movepool[selectedMove];
+                }
+            }
+
+            throw new Exception();
+        }
+
+        public Skill SmartAi(Entity target)
+        {
+            bool hasChosen = false;
+
+            int[] MovePower = new int[Movepool.Count()];
+
+            while (!hasChosen)
+            {
+                for (int i = 0; i < Movepool.Count(); i++)
+                {
+                    MovePower.Append(Movepool[i].Power);
+                }
+
+                int maxPower = MovePower.Max();
+                int maxIndex = MovePower.ToList().IndexOf(maxPower);
+
+                if (Combat.CheckTypeMatchup(Movepool[maxIndex].Type, target.Type) != 0.0f)
+                { 
+                    return Movepool[maxIndex];
+                }
+            }
+
+
+            throw new Exception();
         }
 
 

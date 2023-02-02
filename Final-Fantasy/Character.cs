@@ -8,5 +8,6 @@ namespace Final_Fantasy
 {
     internal class Character : Entity
     {
+
     }
 }

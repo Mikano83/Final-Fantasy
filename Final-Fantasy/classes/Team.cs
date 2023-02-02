@@ -7,7 +7,7 @@ using System.Xml.Linq;
 
 namespace Final_Fantasy
 {
-    internal class Team
+    public class Team
     {
         private Entity[] _teamcontent = new Entity[3];
         public Entity[] TeamContent { get { return _teamcontent; } set { _teamcontent = value; } }

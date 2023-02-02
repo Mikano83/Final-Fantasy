@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.4.33213.308
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Final-Fantasy", "Final-Fantasy\Final-Fantasy.csproj", "{A6A395F3-2292-464F-A268-F1A516316181}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Final-Fantasy", "Final-Fantasy\Final-Fantasy.csproj", "{A6A395F3-2292-464F-A268-F1A516316181}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestProjet", "TestProjet\TestProjet.csproj", "{D01B7615-AB20-445C-9F2C-41B273CCB845}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestProjet", "TestProjet\TestProjet.csproj", "{D01B7615-AB20-445C-9F2C-41B273CCB845}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

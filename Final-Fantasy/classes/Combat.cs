@@ -7,13 +7,13 @@ using System.Threading.Tasks;
 
 namespace Final_Fantasy
 {
-    internal class Combat
+    public class Combat
     {
-        private static Entity[] _playerEntities;
-        private static Entity[] _opponentEntities;
+        private Entity[] _playerEntities;
+        private Entity[] _opponentEntities;
 
-        public static Entity[] PlayerEntities { get { return _playerEntities; } set { _playerEntities = value; } }
-        public static Entity[] OpponentEntities { get { return _opponentEntities; } set { _opponentEntities = value; } }
+        public Entity[] PlayerEntities { get { return _playerEntities; } set { _playerEntities = value; } }
+        public Entity[] OpponentEntities { get { return _opponentEntities; } set { _opponentEntities = value; } }
 
 
         public Combat(Team Player, Team Ennemy)
@@ -46,7 +46,7 @@ namespace Final_Fantasy
 
                 for (int i = 0; i < OpponentEntities.Length; i++)
                 {
-                    DamageCalc(OpponentEntities[i], PlayerEntities[i], playerMove);
+                    DamageCalc(OpponentEntities[i], PlayerEntities[i], OpponentEntities[i].WildAI());
                     KillResult(OpponentEntities[i], PlayerEntities[i]);
                 }
             }
@@ -58,8 +58,8 @@ namespace Final_Fantasy
 
                 for (int i = 0; i < OpponentEntities.Length; i++)
                 {
-                    //PlayerEntities[i] member should take random player selection && playerMove should also take skill selection return value
-                    DamageCalc(OpponentEntities[i], PlayerEntities[i], playerMove);
+                    //PlayerEntities[i] member should take random player selection
+                    DamageCalc(OpponentEntities[i], PlayerEntities[i], OpponentEntities[i].WildAI());
                     KillResult(OpponentEntities[i], PlayerEntities[i]);
                 }
 
@@ -90,6 +90,7 @@ namespace Final_Fantasy
                 }
                 PlayerTeamSpeed += entity.SPD;
             }
+
             foreach (Entity entity in OpponentEntities)
             {
                 if (entity == null)
@@ -155,7 +156,7 @@ namespace Final_Fantasy
             Entity.SyncLevelStat(attackingEntity);
         }
 
-        public bool CheckCritical(Skill selectMove)
+        public static bool CheckCritical(Skill selectMove)
         {
             bool isCritical;
 
@@ -185,11 +186,11 @@ namespace Final_Fantasy
             return STAB;
         }
 
-        public float CheckTypeMatchup(string attackingType, string defendingCreatureType)
+        public static float CheckTypeMatchup(string attackingType, string defendingCreatureType)
         {
             float TypeMultiplier = 1;
 
-            //list type matchup interaction to calculate TypeMultiplier for every possible Type combination (except for double identical type such as Normal/Normal. Which doesn't exists)
+            //list type matchup interactions to calculate TypeMultiplier for every possible Type combination
 
             switch (defendingCreatureType)
             {
@@ -234,16 +235,16 @@ namespace Final_Fantasy
 
         public void DamageCalc(Entity attackingEntity, Entity targetEntity, Skill attack)
         {
-            if(attackingEntity == null || targetEntity == null || attackingEntity.CurrentHP <= 0)
+            if (attackingEntity == null || targetEntity == null || attackingEntity.CurrentHP <= 0)
             {
                 return;
             }
 
-            bool isCritical = false;
+            bool isCritical;
             float CriticalMultiplier;
-            int R = 0;
-            float STAB = 1;
-            float TypeMatchup = 1;
+            int R;
+            float STAB;
+            float TypeMatchup;
 
             CriticalMultiplier = 1;
 
