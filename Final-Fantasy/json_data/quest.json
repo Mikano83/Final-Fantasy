@@ -3,7 +3,7 @@
     {
       "": {
 
-        "id": 0,
+        "id": 0.0,
         "name": "Start of a new journey",
         "type": "Discovery",
         "priority": "Tutorial",
@@ -12,13 +12,13 @@
         "step": [ "Let's start by moving around : Use ZQSD to do so", "Good! Now, let's interact with this bush by pressing E'" ],
         "gil": 0,
         "exp": 100,
-        "item": null
+        "finder": null
       }
     },
     {
       "": {
 
-        "id": 1,
+        "id": 1.0,
         "name": "First fight",
         "type": "Combat",
         "priority": "Tutorial",
@@ -27,7 +27,7 @@
         "step": [ "Defeat the monster" ],
         "gil": 0,
         "exp": 100,
-        "item": "Potion"
+        "finder": "Potion"
       }
     }
   ]

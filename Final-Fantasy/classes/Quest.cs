@@ -21,7 +21,8 @@ namespace Final_Fantasy
         private string _questadvance;
         private int _gilreward;
         private int _expreward;
-        private Item? _itemreward;
+        private string? _itemfinder;
+        private Item _itemreward;
 
         public Quest(string identifier)
         {
@@ -48,12 +49,12 @@ namespace Final_Fantasy
                         string step = new string((string)data["Quest"][i][""]["step"][j]);
                         QuestStep.Add(step);
                     }
-                    
+
 
                     _gilreward = (int)data["Quest"][i][""]["gil"];
                     _expreward = (int)data["Quest"][i][""]["exp"];
-                    //_itemreward = (float)data["Item"][i][""]["id"];
-
+                    _itemfinder = (string)data["Item"][i][""]["finder"];
+                    _itemreward = new Item(_itemfinder);
                 }
             }
         }
