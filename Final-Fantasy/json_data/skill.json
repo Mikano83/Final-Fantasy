@@ -3,19 +3,6 @@
     {
       "": {
 
-        "name": "None",
-        "type": "None",
-        "category": "None",
-        "element": "None",
-        "power": 0,
-        "contact": "false",
-        "mpcost": 0
-
-      }
-    },
-    {
-      "": {
-
         "name": "Attack",
         "type": "Auto",
         "category": "Physical",
@@ -59,7 +46,7 @@
         "type": "Skill",
         "category": "Magical",
         "element": "Holy",
-        "power": 20,
+        "power": 25,
         "contact": "false",
         "mpcost": 25
 

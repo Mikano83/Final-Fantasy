@@ -9,15 +9,18 @@ namespace Final_Fantasy
 {
     public class Combat
     {
-        private Entity[] _playerEntities;
-        private Entity[] _opponentEntities;
+        private static Entity[] _playerEntities;
+        private static Entity[] _opponentEntities;
+        public bool _isInCombat;
 
-        public Entity[] PlayerEntities { get { return _playerEntities; } set { _playerEntities = value; } }
-        public Entity[] OpponentEntities { get { return _opponentEntities; } set { _opponentEntities = value; } }
+        public static Entity[] PlayerEntities { get { return _playerEntities; } set { _playerEntities = value; } }
+        public static Entity[] OpponentEntities { get { return _opponentEntities; } set { _opponentEntities = value; } }
+        public bool IsInCombat { get { return _isInCombat; } set { _isInCombat = value; } }
 
 
         public Combat(Team Player, Team Ennemy)
         {
+            IsInCombat = true;
             PlayerEntities = Player.TeamContent;
             OpponentEntities = Ennemy.TeamContent;
         }

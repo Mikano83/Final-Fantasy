@@ -44,7 +44,7 @@
       "": {
 
         "name": "Goblin",
-        "type": "Humanoid",
+        "type": "Beast",
         "expyield": [ 10, 20 ],
 
         "level": [ 1, 5 ],

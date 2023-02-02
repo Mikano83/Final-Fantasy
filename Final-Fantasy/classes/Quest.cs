@@ -2,6 +2,7 @@
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -16,25 +17,46 @@ namespace Final_Fantasy
         private string _questpriority;
         private string _queststatus;
         private string _questdescription;
-        private string[] _queststep;
+        private List<string> _queststep = new List<string>();
         private string _questadvance;
         private int _gilreward;
-        private int _xpreward;
-        private Item? _itemreward;
+        private int _expreward;
+        private string? _itemfinder;
+        private Item _itemreward;
 
-        public Quest(float id, string name, string type, string priority, string status, string description, string[] step, int gil, int xp, Item item)
+        public Quest(string identifier)
         {
-            _questid = id;
-            _questname = name;
-            _questtype = type;
-            _questpriority = priority;
-            _queststatus = status;
-            _questdescription = description;
-            _queststep = step;
-            _questadvance = _queststep[0];
-            _gilreward = gil;
-            _xpreward = xp;
-            _itemreward = item;
+            //Prepare json file from game data
+
+            string json = File.ReadAllText(@"../../../../Final-Fantasy/json_data/quest.json");
+
+            JObject data = JObject.Parse(json);
+
+            //Search json file for correspondance using the id of the quest
+            for (int i = 0; i <= data.Count; i++)
+            {
+                if (identifier == (string)data["Quest"][i][""]["id"])
+                {
+                    _questid = (int)data["Quest"][i][""]["id"];
+                    _questname = (string)data["Quest"][i][""]["name"];
+                    _questtype = (string)data["Quest"][i][""]["type"];
+                    _questpriority = (string)data["Quest"][i][""]["priority"];
+                    _queststatus = (string)data["Quest"][i][""]["status"];
+                    _questdescription = (string)data["Quest"][i][""]["description"];
+
+                    for (int j = 0; j < data["Quest"][i][""]["step"].Count(); j++)
+                    {
+                        string step = new string((string)data["Quest"][i][""]["step"][j]);
+                        QuestStep.Add(step);
+                    }
+
+
+                    _gilreward = (int)data["Quest"][i][""]["gil"];
+                    _expreward = (int)data["Quest"][i][""]["exp"];
+                    _itemfinder = (string)data["Item"][i][""]["finder"];
+                    _itemreward = new Item(_itemfinder);
+                }
+            }
         }
 
         public float Questid { get { return _questid; } }
@@ -43,9 +65,9 @@ namespace Final_Fantasy
         public string QuestStatus { get { return _queststatus; } }
         public string QuestPriority { get { return _questpriority; } }
         public string QuestDescription { get { return _questdescription; } }
-        public string[] QuestStep { get { return _queststep;} }
+        public List<string> QuestStep { get { return _queststep; } }
         public int GilReward { get { return _gilreward;} }
-        public int XpReward { get { return _xpreward;} }
+        public int ExpReward { get { return _expreward;} }
         public Item? ItemReward { get { return _itemreward;} }
 
         public void QuestStart()
@@ -57,26 +79,43 @@ namespace Final_Fantasy
             }
         }
 
-        public void QuestAdvancement()
+        public void QuestAdvancement(Inventory inventory, Team team)
         {
-            int index = Array.IndexOf(this._queststep, this._questadvance);
+            int index = GetIndex(this._queststep);
             switch (index)
             {
-                case < 0:
+                case < 0:                               // _questadvance cannot be below 0
                     throw new ArgumentException();
                 default:
-                    if (index < (this._queststep.Count() - 1))
+                    if (index < (this._queststep.Count() - 1))      // if _questadvance is not the last step of the quest, progresses to the next step
                     {
                         this._questadvance = this._queststep[index + 1];
                     }
-                    else if (index == (this._queststep.Count() - 1))
+                    else if (index == (this._queststep.Count() - 1))        // if _questadvance was the last step, end the quest and gives out the quest rewards
                     {
+                        inventory.AddGil(this._gilreward);
+                        /*Team of Creature players adds this._expreward to their experience points*/
+                         for(int i = 0 ; i < team.TeamContent.Length; i++)
+                        {
+                            team.TeamContent[i].setExp(this.ExpReward);
+                        }
+
+                         
+                        if (this.ItemReward != null)
+                        {
+                            inventory.AddItem(this._itemreward);
+                        }
                         this._queststatus = "Finished";
                         Console.WriteLine("You have finished a quest !");
                     }
                     break;
             }
 
+        }
+
+        public int GetIndex(List<string> questLength)
+        {
+            return questLength.Count;
         }
     }
 
