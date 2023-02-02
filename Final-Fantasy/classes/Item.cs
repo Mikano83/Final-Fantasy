@@ -35,7 +35,7 @@ namespace Final_Fantasy
                     _itemname = (string)data["Item"][i][""]["name"];
                     _itemcategory = (string)data["Item"][i][""]["category"];
                     _itemdescription = (string)data["Item"][i][""]["description"];
-                    _itempower = (int?)data["Item"][i][""]["power"];
+                    _itempower = (int)data["Item"][i][""]["power"];
                     _itemprice = (int)data["Item"][i][""]["price"];
                     _itemvalue = (int)data["Item"][i][""]["value"];
 
@@ -86,18 +86,18 @@ namespace Final_Fantasy
                     }
                     break;
                 case "Offensive":
-                    if (isInCombat == true)
+                    /*if (isInCombat == true)
                     {
-                        //deals this._itempower (Enemy select here or in combat ?)
+                        deals this._itempower (Enemy select here or in combat ?)
                     }
-                    else Console.WriteLine("This item cannot be used out of combat");
+                    else*/ Console.WriteLine("This item cannot be used out of combat");
                     break;
-                case "Defensive":
-                    if (isInCombat == true)
+                case "Status Up":
+                    /*if (isInCombat == true)
                     {
-                        // increases playerusing stat by this._itempower (need to figure out how to make it last a defined number of combat round beofre reset. Also, need to figure a way to up a specific stat)
+                         increases playerusing stat by this._itempower (need to figure out how to make it last a defined number of combat round beofre reset. Also, need to figure a way to up a specific stat)
                     }
-                    else Console.WriteLine("This item cannot be used out of combat");
+                    else*/ Console.WriteLine("This item cannot be used out of combat");
 
                     break;
                 default:

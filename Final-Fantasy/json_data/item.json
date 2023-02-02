@@ -41,11 +41,23 @@
 
         "id": 3,
         "name": "Vit up",
-        "category": "Defensive",
+        "category": "Status Up",
         "description": "Raise your defense by 10.",
         "power": 10,
         "price": 100,
         "value": 25
+      }
+    },
+    {
+      "": {
+
+        "id": 4,
+        "name": "Mysterious ore",
+        "category": "Key",
+        "description": "A mysterious chunck of ore. Keep it with you at all time to find out more about it",
+        "power": 0,
+        "price": 0,
+        "value": 0
       }
     }
   ]

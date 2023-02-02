@@ -81,7 +81,7 @@ namespace Final_Fantasy
 
         public void QuestAdvancement(Inventory inventory, Team team)
         {
-            int index = Array.IndexOf(this._queststep, this._questadvance);
+            int index = GetIndex(this._queststep);
             switch (index)
             {
                 case < 0:                               // _questadvance cannot be below 0
@@ -94,13 +94,13 @@ namespace Final_Fantasy
                     else if (index == (this._queststep.Count() - 1))        // if _questadvance was the last step, end the quest and gives out the quest rewards
                     {
                         inventory.AddGil(this._gilreward);
-                        /*Team of Creature players adds this._expreward to their experience points*
-                         foreach( in team)
+                        /*Team of Creature players adds this._expreward to their experience points*/
+                         for(int i = 0 ; i < team.TeamContent.Length; i++)
                         {
-                            team.TeamContent += this.expreward;
+                            team.TeamContent[i].setExp(this.ExpReward);
                         }
 
-                         */
+                         
                         if (this.ItemReward != null)
                         {
                             inventory.AddItem(this._itemreward);
@@ -111,6 +111,11 @@ namespace Final_Fantasy
                     break;
             }
 
+        }
+
+        public int GetIndex(List<string> questLength)
+        {
+            return questLength.Count;
         }
     }
 

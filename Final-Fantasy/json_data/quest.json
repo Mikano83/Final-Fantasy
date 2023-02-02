@@ -9,10 +9,25 @@
         "priority": "Tutorial",
         "status": "Accepted",
         "description": "Welcome to the land of Zostedal! Through out this quest, you will learn how to travel, interract with the environment and much more!",
-        "step": [ "Let's start by moving around : Use ZQSD to do so", "Good! Now, let's interact with this bush by pressing E'" ],
+        "step": [ "Let's start by moving around : Use ZQSD to do so", "Good! Now, let's interact with this bush by pressing E" ],
         "gil": 0,
         "exp": 100,
         "finder": null
+      }
+    },
+    {
+      "": {
+
+        "id": 0.1,
+        "name": "Testing out Quest(identifier)",
+        "type": "Discovery",
+        "priority": "Test",
+        "status": "Not discovered",
+        "description": "This is a unit_test to make sure the quest creation works well",
+        "step": [ "step0", "step1", "step2", "step3" ],
+        "gil": 13,
+        "exp": 42,
+        "finder": "Potion"
       }
     },
     {
